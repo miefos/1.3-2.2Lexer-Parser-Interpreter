@@ -1,6 +1,7 @@
 DRAW_TREE = True
 DRAW_TO = './parse_tree.xml'  # parse tree xml file
 f = open(DRAW_TO, "w")
+PROGRAM_FILE = './program.txt'
 
 
 def print_w_tabs(deep, text):
@@ -587,6 +588,7 @@ class Interpreter(NodeVisitor):
     def visit_InputStmt(self, node: InputStmt):
         vars = self.visit(node.varlist)
         for var in vars:
+            print('>>> ', end='')
             received_input = input()
             received_input = self.convert_to_number(received_input)
             self.GLOBAL_SCOPE[var.value] = received_input
@@ -795,7 +797,7 @@ class ASTDrawer(NodeVisitor):
 
 
 def main():
-    text = open('Pascal.ps', 'r').read()
+    text = open(PROGRAM_FILE, 'r').read()
 
     lexer = Lexer(text)
     parser = Parser(lexer)
